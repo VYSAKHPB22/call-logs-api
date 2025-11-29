@@ -1,18 +1,24 @@
-Call-Logs API (NestJS)
-A RESTful API built using NestJS and MongoDB
+# Call-Logs API (NestJS)
 
-Features
+A RESTful API built using **NestJS** and **MongoDB**
 
-Post call logs on a day
-View  all posted call logs and also by date 
-MongoDB connection (via Mongoose)
-Deployed on Render
-🧩 Tech Stack
-NestJS
-MongoDB (Atlas)
-Mongoose
+## Features
 
-Render Deployment
-🔑 Environment Variables
+- Post call logs on a day
+- View all posted call logs and also by date
+- MongoDB connection (via Mongoose)
+- Deployed on Render
+
+## 🧩 Tech Stack
+
+- **NestJS**
+- **MongoDB (Atlas)**
+- **Mongoose**
+- **Render Deployment**
+
+## 🔑 Environment Variables
+
+```env
 PORT=
 MONGODB_URI=
+```

@@ -19,6 +19,8 @@ export class CallDetailsController {
   @Post('add')
    @ApiOperation({ summary: 'Post call logs  as bulk' })
   async Addcalldetails(@Body() callDTO: calldetailsmultipleDTO): Promise<any> {
+ 
+    
     try {
       const result = await this.callDetailsService.Addcalldetails(callDTO);
 

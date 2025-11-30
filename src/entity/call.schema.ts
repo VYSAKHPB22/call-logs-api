@@ -31,7 +31,7 @@ export const CallDetailsSchema = SchemaFactory.createForClass(CallDetails);
 export class CallLog {
   @ApiProperty()
   @Prop({ required: true })
-  date: Date;
+  log_date: Date;
   @ApiProperty({ type: () => CallDetails, isArray: true })
   @Prop({ type: [CallDetailsSchema], default: [] })
   log: CallDetails[];

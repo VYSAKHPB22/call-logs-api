@@ -29,7 +29,7 @@ export class CalldetailsDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
-  date: Date;
+  date: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -38,8 +38,9 @@ export class CalldetailsDto {
 }
 
 export class calldetailsmultipleDTO {
-  @IsDateString()
-  date: Date;
+@IsDateString()
+ log_date: string;
+
   @ApiProperty({ type: () => CalldetailsDto, isArray: true })
   @ValidateNested({ each: true })
   @Type(() => CalldetailsDto)

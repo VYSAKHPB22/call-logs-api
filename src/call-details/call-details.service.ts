@@ -22,7 +22,7 @@ export class CallDetailsService {
     );
 
     const result = await new this.calldetailsModel({
-      date,
+      log_date:date,
       log: callDTO.log,
     });
     if (!result) {

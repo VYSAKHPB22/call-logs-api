@@ -8,6 +8,7 @@ import {
   IsArray,
   ValidateNested,
   IsDateString,
+  IsOptional,
 } from 'class-validator';
 
 export class CalldetailsDto {
@@ -38,8 +39,9 @@ export class CalldetailsDto {
 }
 
 export class calldetailsmultipleDTO {
+  @IsOptional()
 @IsDateString()
- log_date: string;
+ log_date?: string;
 
   @ApiProperty({ type: () => CalldetailsDto, isArray: true })
   @ValidateNested({ each: true })

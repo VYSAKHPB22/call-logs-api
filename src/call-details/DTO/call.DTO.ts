@@ -40,8 +40,8 @@ export class CalldetailsDto {
 
 export class calldetailsmultipleDTO {
   @IsOptional()
-@IsDateString()
- log_date?: string;
+  @IsDateString()
+  log_date?: string;
 
   @ApiProperty({ type: () => CalldetailsDto, isArray: true })
   @ValidateNested({ each: true })

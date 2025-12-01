@@ -22,7 +22,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: '/localhost:/',
+    origin: '*',
     METHODS:'GET,POST,DELETE,PUT,OPTIONS',
     ALLOW_HEADERS:'Content-Type, Authorization',
   });

@@ -37,7 +37,7 @@ export class AuthController {
     try {
       const result = await this.authService.companysignUp(LoginDTO);
       return {
-        message: 'User registerd sucessfully',
+        message: 'Company logged in successfully',
         result: result,
         statusCode: HttpStatus.OK,
       };

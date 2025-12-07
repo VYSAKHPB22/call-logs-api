@@ -31,7 +31,7 @@ export class AuthController {
     }
   }
 
-  @Post('sign-up')
+  @Post('login')
   @ApiOperation({ summary: 'Sign-up company ' })
   async signup(@Body(ValidationPipe) LoginDTO: loginDTO): Promise<any> {
     try {

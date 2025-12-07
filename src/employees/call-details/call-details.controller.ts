@@ -5,14 +5,16 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { CallDetailsService } from './call-details.service';
 import { calldetailsmultipleDTO } from './DTO/call.DTO';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { paginationDTO } from 'src/common/commonDTO/common.DTO';
 
 @ApiTags('Call Details')
-@Controller('call-details')
+@Controller()
 export class CallDetailsController {
   constructor(private readonly callDetailsService: CallDetailsService) {}
 
@@ -36,9 +38,9 @@ export class CallDetailsController {
 
   @Get('call')
    @ApiOperation({ summary: 'Fetch the call logs ' })
-  async getcalldetails(): Promise<any> {
+  async getcalldetails(@Query(ValidationPipe)paginationDTO:paginationDTO): Promise<any> {
     try {
-      const result = await this.callDetailsService.getcalldetails();
+      const result = await this.callDetailsService.getcalldetails(paginationDTO);
 
       return {
         message: 'Call details fetched successfully',

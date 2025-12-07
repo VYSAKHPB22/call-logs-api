@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CallDetailsModule } from './call-details/call-details.module';
+import { CallDetailsModule } from './employees/call-details/call-details.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
+import jwtConfig from './auth/config/jwt.config';
+import { ProfileModule } from './company/profile/profile.module';
+import { AppRouterModule } from './routes/router/router.module';
 
 
 
 @Module({
   imports: [
-        ConfigModule.forRoot({isGlobal:true} ),
+        ConfigModule.forRoot({isGlobal:true,load: [jwtConfig]} ),
  MongooseModule.forRootAsync({
       imports: [ConfigModule], 
       inject: [ConfigService], 
@@ -18,7 +23,9 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
     }),
     
-    CallDetailsModule],
+    CallDetailsModule,
+    
+    AuthModule,CommonModule,ProfileModule,AppRouterModule],
   controllers: [AppController],
   providers: [AppService],
 })

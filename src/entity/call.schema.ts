@@ -8,7 +8,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CallDetails {
   @ApiProperty()
   @Prop({ required: true })
-  number: number;
+  phone_number: string;
   @ApiProperty()
   @Prop({ required: true })
   name: string;

@@ -6,6 +6,8 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { calldetailsmultipleDTO } from './DTO/call.DTO';
+import { paginationDTO } from 'src/common/commonDTO/common.DTO';
+import { off } from 'process';
 
 @Injectable()
 export class CallDetailsService {
@@ -22,7 +24,7 @@ export class CallDetailsService {
     );
 
     const result = await new this.calldetailsModel({
-      log_date:date,
+      log_date: date,
       log: callDTO.log,
     });
     if (!result) {
@@ -34,15 +36,53 @@ export class CallDetailsService {
     return result;
   }
 
-  async getcalldetails(): Promise<any> {
-    const result = await this.calldetailsModel.find();
+  async getcalldetails(paginationDTO: paginationDTO): Promise<any> {
+    const { offset, limit, startDate, endDate } = paginationDTO;
+
+    const options: any = {};
+    const search=paginationDTO.search? paginationDTO.search.trim():null;
+    if (search) {
+      options.$or = [
+        { 'log.name': new RegExp(search, 'i') },
+        { 'log.call_type': new RegExp(search, 'i') },
+      ];
+    }
+    if (startDate || endDate) {
+      options['log.date'] = {};
+
+      if (startDate) {
+        options.createdAt.$gte = new Date(startDate);
+      }
+
+      if (endDate) {
+        const end = new Date(endDate);
+        end.setHours(23, 59, 59, 999);
+        options['log.date'].$lte = end;
+      }
+    }
+
+    const result = await this.calldetailsModel
+      .find(options)
+
+      .skip(offset)
+      .limit(limit)
+      .sort({ createdAt: 1 })
+      .exec();
+    const count = await this.calldetailsModel.countDocuments(options);
     if (!result) {
       throw new NotFoundException(
         'Error fetching call details or no records found',
       );
     }
 
-    return result;
+    return {
+      result,
+      pagination: {
+        offset: offset,
+        limit: limit,
+        totalRecords: count,
+      },
+    };
   }
 
   async getcalldetailsofday(date: string): Promise<any> {

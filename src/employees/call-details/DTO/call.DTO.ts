@@ -14,8 +14,8 @@ import {
 export class CalldetailsDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  number: number;
+  @IsString()
+  phone_number: string;
 
   @ApiProperty()
   @IsNotEmpty()

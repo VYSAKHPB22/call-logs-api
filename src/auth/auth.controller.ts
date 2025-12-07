@@ -32,7 +32,7 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOperation({ summary: 'Sign-up company ' })
+  @ApiOperation({ summary: 'Sign in with  company details ' })
   async signup(@Body(ValidationPipe) LoginDTO: loginDTO): Promise<any> {
     try {
       const result = await this.authService.companysignUp(LoginDTO);

@@ -13,7 +13,7 @@ import { calldetailsmultipleDTO } from './DTO/call.DTO';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { paginationDTO } from 'src/common/commonDTO/common.DTO';
 
-@ApiTags('Call Details')
+@ApiTags('Employee - Call Details')
 @Controller()
 export class CallDetailsController {
   constructor(private readonly callDetailsService: CallDetailsService) {}

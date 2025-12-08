@@ -25,9 +25,9 @@ import { HealthModule } from './health/health/health.module';
       }),
     }),
     
-    CallDetailsModule,
+   
     
-    AuthModule,CommonModule,ProfileModule,AppRouterModule,employeeProfileModule,HealthModule],
+    AuthModule,CommonModule,ProfileModule,AppRouterModule, CallDetailsModule,employeeProfileModule,HealthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,11 +1,12 @@
 import { Controller, Get, HttpStatus, Query, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtEmployeeGuard } from 'src/auth/gaurds/jwt.usergaurd';
 import { paginationDTO } from 'src/common/commonDTO/common.DTO';
 import { ProfileService } from './profile.service';
 
 @ApiBearerAuth()
+@ApiTags('Employee - Profile')
 @UseGuards(JwtEmployeeGuard)
 @Controller()
 

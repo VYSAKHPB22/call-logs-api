@@ -49,3 +49,4 @@ export class calldetailsmultipleDTO {
   @IsArray()
   log: CalldetailsDto[];
 }
+

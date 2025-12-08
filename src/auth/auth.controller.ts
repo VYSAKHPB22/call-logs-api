@@ -7,16 +7,17 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { loginDTO, registerationDTO } from './authDTO/authDTO';
+import { companyregisterationDTO, employeeregisterationDTO, loginDTO, tokenDTO } from './authDTO/authDTO';
+
 @ApiTags('Authentication')
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
+  @Post('register/company')
   @ApiOperation({ summary: 'register company ' })
   async registercompany(
-    @Body(ValidationPipe) registerationDTO: registerationDTO,
+    @Body(ValidationPipe) registerationDTO: companyregisterationDTO,
   ): Promise<any> {
     try {
       const result =
@@ -31,7 +32,26 @@ export class AuthController {
     }
   }
 
-  @Post('login')
+
+    @Post('register/employee')
+  @ApiOperation({ summary: 'register employee ' })
+  async registerEmployee(
+    @Body(ValidationPipe) employeeregisterationDTO:employeeregisterationDTO ,
+  ): Promise<any> {
+    try {
+      const result =
+        await this.authService.employeeRegistration(employeeregisterationDTO);
+      return {
+        message: 'Employee registerd sucessfully',
+        result: result,
+        statusCode: HttpStatus.OK,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Post('companylogin')
   @ApiOperation({ summary: 'Sign in with  company details ' })
   async signup(@Body(ValidationPipe) LoginDTO: loginDTO): Promise<any> {
     try {
@@ -45,4 +65,40 @@ export class AuthController {
       throw error;
     }
   }
+
+
+   @Post('employeelogin')
+  @ApiOperation({ summary: 'Sign in with  employee details ' })
+  async login(@Body(ValidationPipe) LoginDTO: loginDTO): Promise<any> {
+    try {
+      const result = await this.authService.employeesignUp(LoginDTO);
+      return {
+        message: 'Employee logged in successfully',
+        result: result,
+        statusCode: HttpStatus.OK,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+   @Post('refresh-token')
+  @ApiOperation({ summary: 'Refreshing point  of tokens' })
+  async  RefreshToken(@Body(ValidationPipe) TokenDto:tokenDTO):Promise<any>{  {
+
+   try {
+     const result=await this.authService.refreshTokens(TokenDto);
+     return{
+      message:'Token Refreshed Sucessfully',
+      result:result,
+      statusCode:HttpStatus.OK
+     }
+   } catch (error) {
+    
+    throw error
+   }
+  }
+  
+
+}
 }

@@ -37,7 +37,7 @@ export class ProfileService {
     const count = await this.companyModel.countDocuments(options);
     if (!result) {
       throw new NotFoundException(
-        'Error fetching call details or no records found',
+        'Error fetching company details or no records found',
       );
     }
 

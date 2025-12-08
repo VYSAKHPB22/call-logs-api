@@ -24,7 +24,7 @@ export class CompanyDetails {
   @Prop({ required: true, unique: true })
   companyCode: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'employee' }], default: [] })
   company_members: [];
 }
 

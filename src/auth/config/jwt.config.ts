@@ -1,12 +1,17 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('jwt', () => ({
-  admin: {
-    access_secret: process.env.JWT_ADMIN_ACCESS_SECRET_KEY,
-    refresh_secret: process.env.JWT_ADMIN_REFRESH_SECRET,
+  company: {
+    access_secret: process.env.JWT_COMPANY_ACCESS_SECRET_KEY,
+    refresh_secret: process.env.JWT_COMPANY_REFRESH_SECRET,
   
   },
 
+    employee: {
+    access_secret: process.env.JWT_EMPLOYEE_ACCESS_SECRET_KEY,
+    refresh_secret: process.env.JWT_EMPLOYEE_REFRESH_SECRET,
+
+  },
 
   expires: {
     access: process.env.JWT_ACCESS_EXPIRY,

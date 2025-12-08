@@ -21,7 +21,7 @@ export class ProfileController {
         const result = await this.profileService.getcompanydetails(company_id,paginationDTO);
   
         return {
-          message: 'Call details fetched successfully',
+          message: 'Profile details fetched successfully',
           result: result,
           statusCode: HttpStatus.OK,
         };

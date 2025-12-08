@@ -22,7 +22,18 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             Buffer.from(rawJwtToken.split('.')[1], 'base64').toString(),
           );
 
-          const secret = this.jwtConfiguration.admin.access_secret;
+
+           const isCompany = Boolean(decoded.companyCode);
+    const isEmployee = Boolean(decoded.employeeCode);
+
+    if (!isCompany && !isEmployee) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    const tokenType = isCompany ? 'company' : 'employee';
+
+
+          const secret = this.jwtConfiguration[tokenType].access_secret;
 
           if (!secret) {
             return done(new UnauthorizedException('Invalid  secret'));
@@ -38,10 +49,24 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   async validate(payload: JwtPayload) {
   
-    return {
+    if (payload.companyCode) {
+      return {
       _id: payload._id,
       company_name: payload.company_name,
       companyCode: payload.companyCode,
     };
+  }
+   
+  
+  if(payload.employeeCode){
+        return {
+      _id: payload._id,
+      employee_name: payload.employee_name,
+      employeeCode: payload.employeeCode,
+        }
+      }
+
+
+      throw new UnauthorizedException('Invalid token payload');
   }
 }

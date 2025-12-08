@@ -10,6 +10,7 @@ import jwtConfig from './auth/config/jwt.config';
 import { ProfileModule } from './company/profile/profile.module';
 import { AppRouterModule } from './routes/router/router.module';
 import { employeeProfileModule } from './employees/profile/profile.module';
+import { HealthModule } from './health/health/health.module';
 
 
 
@@ -26,7 +27,7 @@ import { employeeProfileModule } from './employees/profile/profile.module';
     
     CallDetailsModule,
     
-    AuthModule,CommonModule,ProfileModule,AppRouterModule,employeeProfileModule],
+    AuthModule,CommonModule,ProfileModule,AppRouterModule,employeeProfileModule,HealthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -19,7 +19,7 @@ export default registerAs('jwt', () => ({
   },
 
   default:{
-    secret: process.env.JWT_SECRET,
-    expiry:process.env.JWT_SECRET_EXPIRY
+    secret: process.env.JWT_DEFAULT_SECRET,
+    expiry:process.env.JWT_REFRESH_EXPIRY,
   }
 }));

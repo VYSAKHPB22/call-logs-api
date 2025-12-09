@@ -109,6 +109,16 @@ export class AuthService {
         'Could not generate employee code, try again',
       );
     }
+ const company = await this.companyModel.findOne({
+    companyCode: employeeregistrationdto.company_code,
+  });
+
+  if (!company) {
+    throw new NotFoundException(
+      'Associated company not found. Please check company code',
+    );
+  }
+
 
     const existingemployee = await this.employeeModel.findOne({
       $or: [
@@ -132,6 +142,8 @@ export class AuthService {
       }
     }
 
+
+
     const hashpassword = await bcrypt.hash(employeeregistrationdto.password, 8);
 
     const employeeDetails = await this.employeeModel.create({
@@ -148,11 +160,7 @@ export class AuthService {
       { $addToSet: { company_members: employeeDetails._id } },
       { new: true },
     );
-    if (!checkcompany) {
-      throw new NotFoundException(
-        'Associated company not found.please check company code',
-      );
-    }
+   
   }
 
   async employeesignUp(loginDTO: loginDTO): Promise<any> {

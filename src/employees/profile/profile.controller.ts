@@ -15,10 +15,10 @@ export class ProfileController {
 
   @Get('profile-details')
        @ApiOperation({ summary: 'Fetch the employee details ' })
-      async getcalldetails(@Query(ValidationPipe)paginationDTO:paginationDTO,@Req()req:any): Promise<any> {
+      async getcalldetails(@Req()req:any): Promise<any> {
         try {
           const employee_id=req.user._id
-          const result = await this.profileService.getemployeedetails(employee_id,paginationDTO);
+          const result = await this.profileService.getemployeedetails(employee_id);
     
           return {
             message: 'Profile details fetched successfully',

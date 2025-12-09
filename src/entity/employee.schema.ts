@@ -1,6 +1,5 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ApiProperty } from "@nestjs/swagger";
-
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Schema({
   id: true,
@@ -11,7 +10,7 @@ export class employeeDetails {
   @Prop({ required: true })
   employee_name: string;
   @ApiProperty()
-  @Prop({ required: true ,lowercase:true,unique:true})
+  @Prop({ required: true, lowercase: true, unique: true })
   employee_email: string;
   @ApiProperty()
   @Prop({ required: true })
@@ -21,12 +20,10 @@ export class employeeDetails {
   @Prop({ required: true })
   employee_phone: string;
 
-  @Prop({ required: true, })
+  @Prop({ required: true })
   companyCode: string;
-   @Prop({ required: true, unique: true })
+  @Prop({ required: true, unique: true })
   employeeCode: string;
-
-  
 }
 
 export const employeeDetailsSchema =

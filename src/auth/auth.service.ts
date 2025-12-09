@@ -31,7 +31,7 @@ export class AuthService {
       registrationdto.company_name,
       'CMP_',
     );
-    if(!compcode){
+    if (!compcode) {
       throw new ConflictException('Could not generate company code, try again');
     }
 
@@ -104,8 +104,10 @@ export class AuthService {
       'EMP_',
     );
 
-    if(!empcode){
-      throw new ConflictException('Could not generate employee code, try again');
+    if (!empcode) {
+      throw new ConflictException(
+        'Could not generate employee code, try again',
+      );
     }
 
     const existingemployee = await this.employeeModel.findOne({
@@ -118,13 +120,13 @@ export class AuthService {
     if (existingemployee) {
       if (
         existingemployee.employee_email ===
-        employeeregistrationdto.company_email
+        employeeregistrationdto.employee_email
       ) {
         throw new ConflictException('Email is already registered');
       }
       if (
         existingemployee.employee_phone ===
-        employeeregistrationdto.company_phone
+        employeeregistrationdto.employee_phone
       ) {
         throw new ConflictException('Phone number is already registered');
       }

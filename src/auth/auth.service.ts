@@ -27,10 +27,13 @@ export class AuthService {
   ) {}
 
   async companyRegistration(registrationdto): Promise<any> {
-    let compcode = this.codeGeneratorUtil.generateCompanyCode(
+    let compcode = await this.codeGeneratorUtil.generateCompanyCode(
       registrationdto.company_name,
       'CMP_',
     );
+    if(!compcode){
+      throw new ConflictException('Could not generate company code, try again');
+    }
 
     const existingCompany = await this.companyModel.findOne({
       $or: [
@@ -96,10 +99,14 @@ export class AuthService {
   }
 
   async employeeRegistration(employeeregistrationdto): Promise<any> {
-    let empcode = this.codeGeneratorUtil.generateCompanyCode(
+    let empcode = await this.codeGeneratorUtil.generateCompanyCode(
       employeeregistrationdto.employee_name,
       'EMP_',
     );
+
+    if(!empcode){
+      throw new ConflictException('Could not generate employee code, try again');
+    }
 
     const existingemployee = await this.employeeModel.findOne({
       $or: [

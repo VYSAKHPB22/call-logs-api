@@ -25,6 +25,8 @@ export class ProfileController {
     @Req() req: any,
   ): Promise<any> {
     try {
+    
+      
       const company_id = req.user._id;
       const result = await this.profileService.getcompanydetails(
         company_id,

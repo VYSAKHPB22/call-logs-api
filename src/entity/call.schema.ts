@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 
 @Schema({
   id: true,
@@ -29,6 +30,13 @@ export const CallDetailsSchema = SchemaFactory.createForClass(CallDetails);
   timestamps: true,
 })
 export class CallLog {
+  @Prop({ type: Types.ObjectId, ref: 'company', required: true })
+  employee_id: Types.ObjectId;
+
+  @Prop({ required: true })
+  employee_name: string;
+  @Prop({ type: Types.ObjectId, ref: 'company', required: true })
+  company_id: Types.ObjectId;
   @ApiProperty()
   @Prop({ required: true })
   log_date: Date;

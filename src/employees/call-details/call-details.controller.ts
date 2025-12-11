@@ -6,21 +6,26 @@ import {
   Param,
   Post,
   Query,
+  Req,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { CallDetailsService } from './call-details.service';
 import { calldetailsmultipleDTO } from './DTO/call.DTO';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { paginationDTO } from 'src/common/commonDTO/common.DTO';
+import { JwtEmployeeGuard } from 'src/auth/gaurds/jwt.usergaurd';
 
 @ApiTags('Employee - Call Details')
+@ApiBearerAuth()
+@UseGuards(JwtEmployeeGuard)
 @Controller()
 export class CallDetailsController {
   constructor(private readonly callDetailsService: CallDetailsService) {}
 
   @Post('add')
    @ApiOperation({ summary: 'Post call logs  as bulk' })
-  async Addcalldetails(@Body() callDTO: calldetailsmultipleDTO): Promise<any> {
+  async Addcalldetails(@Body() callDTO: calldetailsmultipleDTO,@Req()req:any): Promise<any> {
  
     
     try {
@@ -36,35 +41,35 @@ export class CallDetailsController {
     }
   }
 
-  @Get('call')
-   @ApiOperation({ summary: 'Fetch the call logs ' })
-  async getcalldetails(@Query(ValidationPipe)paginationDTO:paginationDTO): Promise<any> {
-    try {
-      const result = await this.callDetailsService.getcalldetails(paginationDTO);
+  // @Get('call')
+  //  @ApiOperation({ summary: 'Fetch the call logs ' })
+  // async getcalldetails(@Query(ValidationPipe)paginationDTO:paginationDTO): Promise<any> {
+  //   try {
+  //     const result = await this.callDetailsService.getcalldetails(paginationDTO);
 
-      return {
-        message: 'Call details fetched successfully',
-        result: result,
-        statusCode: HttpStatus.OK,
-      };
-    } catch (error) {
-      throw error;
-    }
-  }
+  //     return {
+  //       message: 'Call details fetched successfully',
+  //       result: result,
+  //       statusCode: HttpStatus.OK,
+  //     };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
-  @Get('call/:date')
-   @ApiOperation({ summary: 'Fetch call logs of a specific date ' })
-  async getcalldetailsofday(@Param('date') date: string): Promise<any> {
-    try {
-      const result = await this.callDetailsService.getcalldetailsofday(date);
+//   @Get('call/:id')
+//    @ApiOperation({ summary: 'Fetch call logs  by employee id  ' })
+//   async getcalldetailsofday(@Param('id') id: string): Promise<any> {
+//     try {
+//       const result = await this.callDetailsService.getcalldetailsofday(id);
 
-      return {
-        message: 'Call details fetched successfully',
-        result: result,
-        statusCode: HttpStatus.OK,
-      };
-    } catch (error) {
-      throw error;
-    }
-  }
+//       return {
+//         message: 'Call details fetched successfully',
+//         result: result,
+//         statusCode: HttpStatus.OK,
+//       };
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
 }

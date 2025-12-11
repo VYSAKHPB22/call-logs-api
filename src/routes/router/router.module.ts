@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { profile } from 'console';
 import { AuthModule } from 'src/auth/auth.module';
+import { CallDataModule } from 'src/company/call-data/call_data.module';
 import { ProfileModule } from 'src/company/profile/profile.module';
-import { CallDetailsModule } from 'src/employees/call-details/call-details.module';
+import { employeeCallDetailsModule } from 'src/employees/call-details/call-details.module';
 import { employeeProfileModule } from 'src/employees/profile/profile.module';
 
 @Module({
@@ -24,6 +25,10 @@ import { employeeProfileModule } from 'src/employees/profile/profile.module';
                 path: 'profile',
                 module: ProfileModule,
               },
+              {
+                path: 'call-data',
+                module: CallDataModule,
+              }
             ],
           },
 
@@ -32,7 +37,7 @@ import { employeeProfileModule } from 'src/employees/profile/profile.module';
             children: [
               {
                 path: 'call-details',
-                module: CallDetailsModule,
+                module: employeeCallDetailsModule,
               },
                {
                 path: 'profile',

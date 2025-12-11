@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 
 @Schema({
   id: true,
@@ -24,6 +25,10 @@ export class employeeDetails {
   companyCode: string;
   @Prop({ required: true, unique: true })
   employeeCode: string;
+
+  @Prop({ type: Types.ObjectId, ref: 'company', required: true })
+company_id: Types.ObjectId;
+
 }
 
 export const employeeDetailsSchema =

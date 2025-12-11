@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CallDetailsModule } from './employees/call-details/call-details.module';
+
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
@@ -11,6 +11,8 @@ import { ProfileModule } from './company/profile/profile.module';
 import { AppRouterModule } from './routes/router/router.module';
 import { employeeProfileModule } from './employees/profile/profile.module';
 import { HealthModule } from './health/health/health.module';
+import { CallDataModule } from './company/call-data/call_data.module';
+import { employeeCallDetailsModule } from './employees/call-details/call-details.module';
 
 
 
@@ -27,7 +29,7 @@ import { HealthModule } from './health/health/health.module';
     
    
     
-    AuthModule,CommonModule,ProfileModule,AppRouterModule, CallDetailsModule,employeeProfileModule,HealthModule],
+    AppRouterModule,CommonModule,AuthModule,ProfileModule,CallDataModule,employeeCallDetailsModule,employeeProfileModule,HealthModule,],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -9,7 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CodeGeneratorUtil } from 'src/common/utiility/company,code.utl';
 import * as bcrypt from 'bcrypt';
-import { loginDTO, tokenDTO } from './authDTO/authDTO';
+import { employeeregisterationDTO, loginDTO, tokenDTO } from './authDTO/authDTO';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
@@ -98,7 +98,7 @@ export class AuthService {
     return { Access_token: Access_token, Refresh_token: Refresh_token };
   }
 
-  async employeeRegistration(employeeregistrationdto): Promise<any> {
+  async employeeRegistration(employeeregistrationdto:employeeregisterationDTO): Promise<any> {
     let empcode = await this.codeGeneratorUtil.generateCompanyCode(
       employeeregistrationdto.employee_name,
       'EMP_',
@@ -129,8 +129,8 @@ export class AuthService {
 
     if (existingemployee) {
       if (
-        existingemployee.employee_email ===
-        employeeregistrationdto.employee_email
+        existingemployee.employee_email.toLocaleLowerCase() ===
+        employeeregistrationdto.employee_email.toLocaleLowerCase()
       ) {
         throw new ConflictException('Email is already registered');
       }
@@ -149,10 +149,11 @@ export class AuthService {
     const employeeDetails = await this.employeeModel.create({
       employee_name: employeeregistrationdto.employee_name,
       password: hashpassword,
-      employee_email: employeeregistrationdto.employee_email,
+      employee_email: employeeregistrationdto.employee_email.toLocaleLowerCase(),
       employee_phone: employeeregistrationdto.employee_phone,
       companyCode: employeeregistrationdto.company_code,
       employeeCode: empcode,
+      company_id: company._id,
     });
 
     const checkcompany = await this.companyModel.findOneAndUpdate(

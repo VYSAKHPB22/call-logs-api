@@ -9,6 +9,7 @@ import {
   ValidateNested,
   IsDateString,
   IsOptional,
+  IsMongoId,
 } from 'class-validator';
 
 export class CalldetailsDto {
@@ -39,6 +40,15 @@ export class CalldetailsDto {
 }
 
 export class calldetailsmultipleDTO {
+  
+  @IsNotEmpty()
+  @IsMongoId()
+  employee_id?: string;
+
+   @IsOptional()
+  @IsMongoId()
+  doc_id?: string;
+
   @IsOptional()
   @IsDateString()
   log_date?: string;

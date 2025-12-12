@@ -32,6 +32,7 @@ export class CallDetailsService {
       }
       existinglog.log.push(...callDTO.log);
       result = await existinglog.save();
+      return result;
     } else {
       const checkemployee = await this.employeeModel.findById(
         callDTO.employee_id,
@@ -53,8 +54,9 @@ export class CallDetailsService {
         );
       }
       await result.save();
+         return result;
     }
-    return result;
+ 
   }
 
   // async getcalldetails(paginationDTO: paginationDTO): Promise<any> {

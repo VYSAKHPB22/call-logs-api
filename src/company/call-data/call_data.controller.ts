@@ -38,7 +38,7 @@ export class CallDataController {
    @ApiOperation({ summary: 'Fetch call logs  by employee id  ' })
   async getcalldetailsofday(@Param('id')id:string,@Body()calldetailsDto:calldetailsDTO): Promise<any> {
     try {
-     
+   
       const result = await this.callDataService.getcalldetailsofday(id,calldetailsDto);
 
       return {

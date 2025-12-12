@@ -70,12 +70,18 @@ export class CallDataService {
       throw new NotFoundException('Employee not found');
     }
 
+    const inputDate = new Date(calldetailsDto.log_date);
+
+    const start = new Date(inputDate.setHours(0, 0, 0, 0));
+
+    const end = new Date(inputDate.setHours(23, 59, 59, 999));
     const result = await this.calldetailsModel
       .findOne({
         employee_id: checkemployee._id,
-        date: calldetailsDto.log_date,
+        log_date: { $gte: start, $lte: end },
       })
       .exec();
+  
 
     if (!result) {
       throw new NotFoundException(

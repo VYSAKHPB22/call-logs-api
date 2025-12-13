@@ -29,7 +29,8 @@ export class CallDetailsController {
  
     
     try {
-      const result = await this.callDetailsService.Addcalldetails(callDTO);
+      const employee_id = req.user._id
+      const result = await this.callDetailsService.Addcalldetails(callDTO,employee_id);
 
       return {
         message: 'Call details added successfully',

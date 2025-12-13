@@ -17,7 +17,7 @@ export class CallDetailsService {
     @InjectModel('employee') private readonly employeeModel: Model<any>,
   ) {}
 
-  async Addcalldetails(callDTO: calldetailsmultipleDTO): Promise<any> {
+  async Addcalldetails(callDTO: calldetailsmultipleDTO ,employee_id:string): Promise<any> {
     const today = new Date();
     const date = new Date(
       today.getFullYear(),
@@ -35,7 +35,7 @@ export class CallDetailsService {
       return result;
     } else {
       const checkemployee = await this.employeeModel.findById(
-        callDTO.employee_id,
+        employee_id,
       );
       if (!checkemployee) {
         throw new NotFoundException('Employee not found');

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { calldetailsDTO } from './DTO/call.details.dto';
+
 import { paginationDTO } from 'src/common/commonDTO/common.DTO';
 
 @Injectable()
@@ -19,22 +19,27 @@ export class CallDataService {
     const { offset, limit, startDate, endDate } = paginationDTO;
 
     const options: any = {};
+    options.company_id = company_id;
     const search = paginationDTO.search ? paginationDTO.search.trim() : null;
     if (search) {
-      options.$or = [{ employee_name: new RegExp(search, 'i') }];
+      options.$or = [{ employee_name: { $regex: search, $options: 'i' } }];
     }
     if (startDate || endDate) {
-      options['log_date'] = {};
+      const dateFilter: any = {};
 
       if (startDate) {
-        options.createdAt.$gte = new Date(startDate);
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+        dateFilter.$gte = start;
       }
 
       if (endDate) {
         const end = new Date(endDate);
         end.setHours(23, 59, 59, 999);
-        options['log_date'].$lte = end;
+        dateFilter.$lte = end;
       }
+
+      options.log_date = dateFilter;
     }
 
     const result = await this.calldetailsModel
@@ -42,14 +47,9 @@ export class CallDataService {
 
       .skip(offset)
       .limit(limit)
-      .sort({ createdAt: 1 })
+      .sort({ log_date: -1 })
       .exec();
     const count = await this.calldetailsModel.countDocuments(options);
-    if (!result) {
-      throw new NotFoundException(
-        'Error fetching call details or no records found',
-      );
-    }
 
     return {
       result,
@@ -63,31 +63,55 @@ export class CallDataService {
 
   async getcalldetailsofday(
     id: string,
-    calldetailsDto: calldetailsDTO,
+    paginationDTO: paginationDTO,
   ): Promise<any> {
+    const { offset, limit, startDate, endDate } = paginationDTO;
+
     const checkemployee = await this.employeeModel.findById(id);
     if (!checkemployee) {
       throw new NotFoundException('Employee not found');
     }
 
-    const inputDate = new Date(calldetailsDto.log_date);
-
-    const start = new Date(inputDate.setHours(0, 0, 0, 0));
-
-    const end = new Date(inputDate.setHours(23, 59, 59, 999));
-    const result = await this.calldetailsModel
-      .findOne({
-        employee_id: checkemployee._id,
-        log_date: { $gte: start, $lte: end },
-      })
-      .exec();
-  
-
-    if (!result) {
-      throw new NotFoundException(
-        'Error fetching call details or no records found for the specified date',
-      );
+    const options: any = {};
+    options.company_id = checkemployee.company_id;
+    options.employee_id = checkemployee._id;
+    const search = paginationDTO.search ? paginationDTO.search.trim() : null;
+    if (search) {
+      options.$or = [{ employee_name: { $regex: search, $options: 'i' } }];
     }
-    return result;
+    if (startDate || endDate) {
+      const dateFilter: any = {};
+
+      if (startDate) {
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+        dateFilter.$gte = start;
+      }
+
+      if (endDate) {
+        const end = new Date(endDate);
+        end.setHours(23, 59, 59, 999);
+        dateFilter.$lte = end;
+      }
+
+      options.log_date = dateFilter;
+    }
+
+    const result = await this.calldetailsModel
+      .find(options)
+
+      .skip(offset)
+      .limit(limit)
+      .sort({ log_date: -1 })
+      .exec();
+    const count = await this.calldetailsModel.countDocuments(options);
+    return {
+      result,
+      pagination: {
+        offset: offset,
+        limit: limit,
+        totalRecords: count,
+      },
+    };
   }
 }

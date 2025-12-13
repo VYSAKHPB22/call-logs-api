@@ -41,9 +41,7 @@ export class CalldetailsDto {
 
 export class calldetailsmultipleDTO {
   
-  @IsNotEmpty()
-  @IsMongoId()
-  employee_id?: string;
+
 
    @IsOptional()
   @IsMongoId()

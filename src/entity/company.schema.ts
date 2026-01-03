@@ -25,7 +25,7 @@ export class CompanyDetails {
   companyCode: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'employee' }], default: [] })
-  company_members: [];
+  company_members: Types.ObjectId[];
 }
 
 export const CompanyDetailsSchema =

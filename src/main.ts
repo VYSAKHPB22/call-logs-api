@@ -13,7 +13,7 @@ async function bootstrap() {
     transform: true,
   }));
   const config = new DocumentBuilder()
-    .setTitle('NestJS-call-logs-api') 
+    .setTitle('NestJS-call-logs-api-uat') 
     .setDescription('call-log management api')
     .setVersion('1.0')
     .addBearerAuth()

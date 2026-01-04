@@ -12,8 +12,9 @@ async function bootstrap() {
      whitelist: true,
     transform: true,
   }));
+  const app_env = process.env.APP_ENV || 'DEV';
   const config = new DocumentBuilder()
-    .setTitle('NestJS-call-logs-api-uat') 
+  .setTitle(`NestJS-call-logs-api-${app_env.toUpperCase()}`) 
     .setDescription('call-log management api')
     .setVersion('1.0')
     .addBearerAuth()
